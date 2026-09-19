@@ -64,6 +64,31 @@
       -webkit-user-drag: none;
     }
 
+    .interactive-canvas {
+      position: relative;
+      width: min(100vw, calc(100svh * 16 / 9));
+      aspect-ratio: 16 / 9;
+    }
+
+    .interactive-canvas > img {
+      position: absolute;
+      inset: 0;
+    }
+
+    .phone-demo {
+      position: absolute;
+      z-index: 2;
+      top: 7.5%;
+      right: 22.5%;
+      width: 21.2%;
+      aspect-ratio: 393 / 852;
+      overflow: hidden;
+      border: 0;
+      border-radius: 8.5% / 4%;
+      background: transparent;
+      filter: drop-shadow(0 18px 28px rgba(35, 55, 75, .16));
+    }
+
     .hover-zone {
       position: fixed;
       z-index: 5;
@@ -200,7 +225,13 @@
     <figure class="slide" id="p4"><img src="assets/4.jpg" alt="第 4 页：从一次点击到一次关系"><figcaption class="sr-only">第 4 页</figcaption></figure>
     <figure class="slide" id="p5"><img src="assets/5.jpg" alt="第 5 页：设计原则与方案机制"><figcaption class="sr-only">第 5 页</figcaption></figure>
     <figure class="slide" id="p6"><img src="assets/6.jpg?v=2" alt="第 6 页：我找人 A-B"><figcaption class="sr-only">第 6 页</figcaption></figure>
-    <figure class="slide" id="p7"><img src="assets/7-figma.jpg?v=1" alt="第 7 页：Coding 戳一戳"><figcaption class="sr-only">第 7 页</figcaption></figure>
+    <figure class="slide slide--interactive" id="p7">
+      <div class="interactive-canvas">
+        <img src="assets/7.jpg?v=2" alt="第 7 页：Coding 戳一戳">
+        <iframe class="phone-demo" src="phone-demo.html?embed=1&amp;v=23" title="戳一戳交互演示" loading="eager"></iframe>
+      </div>
+      <figcaption class="sr-only">第 7 页，可操作的戳一戳手机界面演示</figcaption>
+    </figure>
     <figure class="slide" id="p8"><img src="assets/8.jpg" alt="第 8 页：我被戳一戳 B-A"><figcaption class="sr-only">第 8 页</figcaption></figure>
     <figure class="slide" id="p9"><img src="assets/9.jpg?v=2" alt="第 9 页：从轻互动到深交流"><figcaption class="sr-only">第 9 页</figcaption></figure>
     <figure class="slide" id="p10"><img src="assets/10.jpg" alt="第 10 页：二期迭代"><figcaption class="sr-only">第 10 页</figcaption></figure>
@@ -227,6 +258,7 @@
     const pageButtons = [...document.querySelectorAll('.page-nav button')];
     const prevButton = document.querySelector('.page-turn--prev');
     const nextButton = document.querySelector('.page-turn--next');
+    const phoneDemo = document.querySelector('.phone-demo');
     const hashIndex = slides.findIndex((slide) => `#${slide.id}` === location.hash);
     let current = hashIndex >= 0 ? hashIndex : 0;
     let locked = false;
@@ -250,6 +282,12 @@
       nextButton.disabled = current === slides.length - 1;
       history.replaceState(null, '', `#p${current + 1}`);
       document.title = `交集 - 第 ${current + 1} 页`;
+
+      if (current === 6) {
+        window.setTimeout(() => {
+          phoneDemo.contentWindow?.postMessage('restart-poke-guide', '*');
+        }, 120);
+      }
     };
 
     const turn = (direction) => {
@@ -287,6 +325,10 @@
       const delta = event.changedTouches[0].clientX - touchStartX;
       if (Math.abs(delta) > 48) turn(delta < 0 ? 1 : -1);
     }, { passive: true });
+
+    phoneDemo.addEventListener('load', () => {
+      if (current === 6) phoneDemo.contentWindow?.postMessage('restart-poke-guide', '*');
+    });
 
     showPage(current);
   </script>
