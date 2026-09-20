@@ -220,21 +220,21 @@
 <body>
   <main class="deck" aria-live="polite">
     <figure class="slide" id="p1"><img src="assets/1.jpg?v=2" alt="第 1 页：交集，让陌生互动不再从零开始" fetchpriority="high"><figcaption class="sr-only">第 1 页</figcaption></figure>
-    <figure class="slide" id="p2"><img src="assets/2.jpg" alt="第 2 页：为什么需要轻社交"><figcaption class="sr-only">第 2 页</figcaption></figure>
-    <figure class="slide" id="p3"><img src="assets/3.jpg?v=2" alt="第 3 页：交集，你们都在准备同一件事"><figcaption class="sr-only">第 3 页</figcaption></figure>
-    <figure class="slide" id="p4"><img src="assets/4.jpg" alt="第 4 页：从一次点击到一次关系"><figcaption class="sr-only">第 4 页</figcaption></figure>
-    <figure class="slide" id="p5"><img src="assets/5.jpg" alt="第 5 页：设计原则与方案机制"><figcaption class="sr-only">第 5 页</figcaption></figure>
-    <figure class="slide" id="p6"><img src="assets/6.jpg?v=2" alt="第 6 页：我找人 A-B"><figcaption class="sr-only">第 6 页</figcaption></figure>
+    <figure class="slide" id="p2"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/2.jpg" alt="第 2 页：为什么需要轻社交"><figcaption class="sr-only">第 2 页</figcaption></figure>
+    <figure class="slide" id="p3"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/3.jpg?v=2" alt="第 3 页：交集，你们都在准备同一件事"><figcaption class="sr-only">第 3 页</figcaption></figure>
+    <figure class="slide" id="p4"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/4.jpg" alt="第 4 页：从一次点击到一次关系"><figcaption class="sr-only">第 4 页</figcaption></figure>
+    <figure class="slide" id="p5"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/5.jpg" alt="第 5 页：设计原则与方案机制"><figcaption class="sr-only">第 5 页</figcaption></figure>
+    <figure class="slide" id="p6"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/6.jpg?v=2" alt="第 6 页：我找人 A-B"><figcaption class="sr-only">第 6 页</figcaption></figure>
     <figure class="slide slide--interactive" id="p7">
       <div class="interactive-canvas">
-        <img src="assets/7.jpg?v=2" alt="第 7 页：Coding 戳一戳">
-        <iframe class="phone-demo" src="phone-demo.html?embed=1&amp;v=27" title="戳一戳交互演示" loading="eager"></iframe>
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/7.jpg?v=2" alt="第 7 页：Coding 戳一戳">
+        <iframe class="phone-demo" data-src="phone-demo.html?embed=1&amp;v=28" title="戳一戳交互演示"></iframe>
       </div>
       <figcaption class="sr-only">第 7 页，可操作的戳一戳手机界面演示</figcaption>
     </figure>
-    <figure class="slide" id="p8"><img src="assets/8.jpg" alt="第 8 页：我被戳一戳 B-A"><figcaption class="sr-only">第 8 页</figcaption></figure>
-    <figure class="slide" id="p9"><img src="assets/9.jpg?v=2" alt="第 9 页：从轻互动到深交流"><figcaption class="sr-only">第 9 页</figcaption></figure>
-    <figure class="slide" id="p10"><img src="assets/10.jpg" alt="第 10 页：二期迭代"><figcaption class="sr-only">第 10 页</figcaption></figure>
+    <figure class="slide" id="p8"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/8.jpg" alt="第 8 页：我被戳一戳 B-A"><figcaption class="sr-only">第 8 页</figcaption></figure>
+    <figure class="slide" id="p9"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/9.jpg?v=2" alt="第 9 页：从轻互动到深交流"><figcaption class="sr-only">第 9 页</figcaption></figure>
+    <figure class="slide" id="p10"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/10.jpg" alt="第 10 页：二期迭代"><figcaption class="sr-only">第 10 页</figcaption></figure>
   </main>
 
   <div class="hover-zone hover-zone--prev"><button class="page-turn page-turn--prev" type="button" aria-label="上一页">‹</button></div>
@@ -266,6 +266,17 @@
     const showPage = (nextIndex) => {
       const bounded = Math.min(slides.length - 1, Math.max(0, nextIndex));
       if (bounded === current && slides[current].classList.contains('is-active')) return;
+
+      const loadSlide = (index) => {
+        const slide = slides[index];
+        if (!slide) return;
+        const img = slide.querySelector('img[data-src]');
+        if (img) img.src = img.dataset.src;
+        const frame = slide.querySelector('iframe[data-src]');
+        if (frame) frame.src = frame.dataset.src;
+      };
+      loadSlide(bounded);
+      loadSlide(bounded + 1);
 
       slides.forEach((slide, index) => {
         slide.classList.toggle('is-active', index === bounded);
