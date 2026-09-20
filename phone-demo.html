@@ -299,6 +299,26 @@
       outline-offset: -5px;
     }
 
+    .chat-avatar-target {
+      position: absolute;
+      z-index: 3;
+      top: 5%;
+      left: 13.5%;
+      width: 10%;
+      height: 5.6%;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .chat-avatar-target:focus-visible {
+      outline: 2px solid #111;
+      outline-offset: -4px;
+    }
+
     .chat-card-mask {
       position: absolute;
       z-index: 1;
@@ -718,6 +738,7 @@
         <button class="chat-suggestion-target" type="button" aria-label="使用推荐问题：楼层费和停车距离一般怎么收费？"></button>
         <button class="chat-card-close" type="button" aria-label="关闭共同经历卡片"></button>
         <button class="chat-back" type="button" aria-label="返回评论页"></button>
+        <button class="chat-avatar-target" type="button" aria-label="查看安装小能手主页"></button>
         <input class="chat-compose-input" type="text" placeholder="发消息..." aria-label="私信内容">
       </section>
       <section class="profile-page" aria-label="安装小能手的个人主页" aria-hidden="true" inert>
@@ -739,6 +760,7 @@
     const askTarget = document.querySelector('.ask-target');
     const chatPage = document.querySelector('.chat-page');
     const chatBack = document.querySelector('.chat-back');
+    const chatAvatarTarget = document.querySelector('.chat-avatar-target');
     const chatCardClose = document.querySelector('.chat-card-close');
     const chatSuggestionTarget = document.querySelector('.chat-suggestion-target');
     const chatComposeInput = document.querySelector('.chat-compose-input');
@@ -817,6 +839,7 @@
     };
 
     askTarget.addEventListener('click', () => setChatOpen(true));
+    chatAvatarTarget.addEventListener('click', () => setProfileOpen(true));
     chatBack.addEventListener('click', () => {
       setChatOpen(false);
       intersectionTarget.focus();
@@ -843,7 +866,7 @@
     profileTarget.addEventListener('click', () => setProfileOpen(true));
     profileBack.addEventListener('click', () => {
       setProfileOpen(false);
-      intersectionTarget.focus();
+      if (!phone.classList.contains('is-chat-open')) intersectionTarget.focus();
     });
 
     document.addEventListener('keydown', (event) => {
