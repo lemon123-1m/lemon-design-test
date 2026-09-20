@@ -830,6 +830,7 @@
     chatSuggestionTarget.addEventListener('click', () => {
       chatComposeInput.value = '楼层费和停车距离一般怎么收费？';
       chatComposeInput.dispatchEvent(new Event('input', { bubbles: true }));
+      chatComposeInput.focus({ preventScroll: true });
     });
 
     const setProfileOpen = (open) => {
