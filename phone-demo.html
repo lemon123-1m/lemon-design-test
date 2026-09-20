@@ -80,6 +80,21 @@
       -webkit-user-drag: none;
     }
 
+    .recipient-avatar {
+      position: absolute;
+      z-index: 8;
+      top: 52.82%;
+      left: 2.29%;
+      display: block;
+      width: 12.72%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      pointer-events: none;
+      transform-origin: 50% 68%;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
     .poke-icon {
       position: absolute;
       z-index: 10;
@@ -420,6 +435,10 @@
       animation: icon-poke 2.2s ease-in-out 3;
     }
 
+    .phone.is-avatar-wobbling .recipient-avatar {
+      animation: avatar-wobble .74s cubic-bezier(.36, .08, .25, 1) both;
+    }
+
     .phone.is-bursting .icon-outline {
       animation: outline-collapse .9s cubic-bezier(.36, .05, .3, 1) both;
     }
@@ -476,6 +495,14 @@
       25% {
         transform: translateX(-11%) scaleX(1.06) scaleY(.98);
       }
+    }
+
+    @keyframes avatar-wobble {
+      0%, 100% { transform: translateX(0) rotate(0deg) scale(1); }
+      18% { transform: translateX(-1.5%) rotate(-4deg) scale(1.015); }
+      38% { transform: translateX(1.2%) rotate(3.4deg) scale(1.015); }
+      58% { transform: translateX(-.7%) rotate(-2.2deg) scale(1.008); }
+      76% { transform: translateX(.4%) rotate(1.2deg) scale(1.004); }
     }
 
     @keyframes outline-collapse {
@@ -588,6 +615,10 @@
         animation: none;
       }
 
+      .phone.is-avatar-wobbling .recipient-avatar {
+        animation: none;
+      }
+
       .phone.is-bursting .icon-outline,
       .phone.is-bursting .icon-filled,
       .phone.is-bursting .particle,
@@ -614,6 +645,7 @@
   <main class="demo">
     <section class="phone" aria-label="小红书评论页手机界面">
       <img class="screen-art" src="assets/phone/reference.jpeg" alt="小红书评论页，评论中展示交集标签与戳一戳入口">
+      <img class="recipient-avatar" src="assets/phone/avatar-install.jpg" alt="" aria-hidden="true">
       <span class="poke-icon" aria-hidden="true">
         <img class="icon-outline" src="assets/poke-hand.svg" alt="">
         <img class="icon-filled" src="assets/phone/poke-filled.png" alt="">
@@ -650,6 +682,7 @@
   <script>
     const phone = document.querySelector('.phone');
     const pokeIcon = document.querySelector('.poke-icon');
+    const recipientAvatar = document.querySelector('.recipient-avatar');
     const pokeTarget = document.querySelector('.poke-target');
     const intersectionTarget = document.querySelector('.intersection-target');
     const sheetLayer = document.querySelector('.sheet-layer');
@@ -677,6 +710,10 @@
       if (event.animationName === 'icon-poke') phone.classList.remove('is-guiding');
     });
 
+    recipientAvatar.addEventListener('animationend', (event) => {
+      if (event.animationName === 'avatar-wobble') phone.classList.remove('is-avatar-wobbling');
+    });
+
     pokeTarget.addEventListener('click', () => {
       window.clearTimeout(burstTimer);
 
@@ -695,9 +732,9 @@
       }
 
       pokeTarget.setAttribute('aria-label', '戳一戳');
-      phone.classList.remove('is-guiding', 'is-bursting', 'is-filled');
+      phone.classList.remove('is-guiding', 'is-bursting', 'is-filled', 'is-avatar-wobbling');
       void phone.offsetWidth;
-      phone.classList.add('is-bursting');
+      phone.classList.add('is-bursting', 'is-avatar-wobbling');
 
       burstTimer = window.setTimeout(() => {
         phone.classList.remove('is-bursting');
