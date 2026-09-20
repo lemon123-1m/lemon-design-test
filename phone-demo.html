@@ -95,6 +95,26 @@
       -webkit-user-drag: none;
     }
 
+    .comment-avatar-target {
+      position: absolute;
+      z-index: 8;
+      top: 52.82%;
+      left: 2.29%;
+      width: 12.72%;
+      height: 5.9%;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .comment-avatar-target:focus-visible {
+      outline: 2px solid #111;
+      outline-offset: -4px;
+    }
+
     .poke-icon {
       position: absolute;
       z-index: 10;
@@ -712,6 +732,7 @@
     <section class="phone" aria-label="小红书评论页手机界面">
       <img class="screen-art" src="assets/phone/reference.jpeg?v=3" alt="小红书评论页，评论中展示交集标签与戳一戳入口">
       <img class="recipient-avatar" src="assets/phone/avatar-install.jpg" alt="" aria-hidden="true">
+      <button class="comment-avatar-target" type="button" aria-label="查看安装小能手主页"></button>
       <span class="poke-icon" aria-hidden="true">
         <img class="icon-outline" src="assets/poke-hand.svg" alt="">
         <img class="icon-filled" src="assets/phone/poke-filled.png" alt="">
@@ -752,6 +773,7 @@
     const phone = document.querySelector('.phone');
     const pokeIcon = document.querySelector('.poke-icon');
     const recipientAvatar = document.querySelector('.recipient-avatar');
+    const commentAvatarTarget = document.querySelector('.comment-avatar-target');
     const pokeTarget = document.querySelector('.poke-target');
     const intersectionTarget = document.querySelector('.intersection-target');
     const sheetLayer = document.querySelector('.sheet-layer');
@@ -864,6 +886,7 @@
     };
 
     profileTarget.addEventListener('click', () => setProfileOpen(true));
+    commentAvatarTarget.addEventListener('click', () => setProfileOpen(true));
     profileBack.addEventListener('click', () => {
       setProfileOpen(false);
       if (!phone.classList.contains('is-chat-open')) intersectionTarget.focus();
