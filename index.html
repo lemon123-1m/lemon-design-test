@@ -78,15 +78,15 @@
     .phone-demo {
       position: absolute;
       z-index: 2;
-      top: 7.5%;
-      right: 22.5%;
+      top: 8.9%;
+      right: 13.1%;
       width: 21.2%;
       aspect-ratio: 393 / 852;
       overflow: hidden;
       border: 0;
       border-radius: 8.5% / 4%;
       background: transparent;
-      filter: drop-shadow(0 18px 28px rgba(35, 55, 75, .16));
+      filter: none;
     }
 
     .hover-zone {
@@ -99,6 +99,8 @@
 
     .hover-zone--prev { left: 0; }
     .hover-zone--next { right: 0; }
+
+    body.is-interactive-page .hover-zone--next { width: 10vw; }
 
     .page-turn {
       position: absolute;
@@ -219,16 +221,16 @@
 </head>
 <body>
   <main class="deck" aria-live="polite">
-    <figure class="slide" id="p1"><img src="assets/1.jpg?v=2" alt="第 1 页：交集，让陌生互动不再从零开始" fetchpriority="high"><figcaption class="sr-only">第 1 页</figcaption></figure>
+    <figure class="slide" id="p1"><img src="assets/1.jpg?v=3" alt="第 1 页：交集，让陌生互动不再从零开始" fetchpriority="high"><figcaption class="sr-only">第 1 页</figcaption></figure>
     <figure class="slide" id="p2"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/2.jpg" alt="第 2 页：为什么需要轻社交"><figcaption class="sr-only">第 2 页</figcaption></figure>
     <figure class="slide" id="p3"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/3.jpg?v=2" alt="第 3 页：交集，你们都在准备同一件事"><figcaption class="sr-only">第 3 页</figcaption></figure>
     <figure class="slide" id="p4"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/4.jpg" alt="第 4 页：从一次点击到一次关系"><figcaption class="sr-only">第 4 页</figcaption></figure>
     <figure class="slide" id="p5"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/5.jpg" alt="第 5 页：设计原则与方案机制"><figcaption class="sr-only">第 5 页</figcaption></figure>
-    <figure class="slide" id="p6"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/6.jpg?v=2" alt="第 6 页：我找人 A-B"><figcaption class="sr-only">第 6 页</figcaption></figure>
+    <figure class="slide" id="p6"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/6.jpg?v=3" alt="第 6 页：我找人 A-B"><figcaption class="sr-only">第 6 页</figcaption></figure>
     <figure class="slide slide--interactive" id="p7">
       <div class="interactive-canvas">
-        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/7.jpg?v=2" alt="第 7 页：Coding 戳一戳">
-        <iframe class="phone-demo" data-src="phone-demo.html?embed=1&amp;v=28" title="戳一戳交互演示"></iframe>
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="assets/7.jpg?v=3" alt="第 7 页：Coding 戳一戳动效">
+        <iframe class="phone-demo" data-src="phone-demo.html?embed=1&amp;v=29" title="戳一戳交互演示"></iframe>
       </div>
       <figcaption class="sr-only">第 7 页，可操作的戳一戳手机界面演示</figcaption>
     </figure>
@@ -289,6 +291,7 @@
       });
 
       current = bounded;
+      document.body.classList.toggle('is-interactive-page', current === 6);
       prevButton.disabled = current === 0;
       nextButton.disabled = current === slides.length - 1;
       history.replaceState(null, '', `#p${current + 1}`);
